@@ -1,0 +1,42 @@
+production: &default
+  serverPort: 3000
+  baseUrl: http://www.gonzalorios.cl
+  views:
+    engine: .hbs
+    extension: .hbs
+    layout: main
+  html:
+    livereload: false
+    minify: true
+    css:
+      stylusPrecompile: true
+      compress: true
+  languages:
+    default: en
+    list: [en, es]
+  security:
+    secret: g0nz4l0r10s.cl
+  session:
+    cookieDomain: .gonzalorios.cl
+    maxAge: 259200
+    cookiePrefix: 'mdSession_'
+    path: '/'
+    httpOnly: true
+
+stage: &stage
+  <<: *default
+  baseUrl: http://stage.gonzalorios.cl
+
+latest: &latest
+  <<: *stage
+  baseUrl: http://latest.gonzalorios.cl
+
+development:
+  <<: *latest
+  baseUrl: http://dev.gonzalorios.cl
+  html:
+    livereload: true
+    minify: false
+    css:
+      stylusPrecompile: false
+      compress: false
