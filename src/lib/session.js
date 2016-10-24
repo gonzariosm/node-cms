@@ -1,10 +1,11 @@
+import $config from './config';
 import _ from 'lodash';
 import utils from './utils';
 
 export default (req, res, next) => {
   const configData = $config().session;
   const cookiePrefix = configData.cookiePrefix;
-  let sessionData = parseSession();
+  const sessionData = parseSession();
 
   const options = {
     domain: configData.cookieDomain,
@@ -19,23 +20,24 @@ export default (req, res, next) => {
     httpOnly: configData.httpOnly
   };
 
+  // Methods
   res.session = session;
   res.clearSession = clearSession;
   res.destroySessions = destroySessions;
 
-  next();
+  return next();
 
   function parseSession() {
-    let rVal = {};
+    const rVal = {};
 
     _.forEach(req.cookies, (value, key) => {
-      const sessionPrefix = new RegExp('^', cookiePrefix);
-      const isSessionCookie = key.search(sessionPrefix) !== !1;
+      const sessionPrefix = new RegExp(`^${cookiePrefix}`);
+      const isSessionCookie = key.search(sessionPrefix) !== -1;
 
       if (isSessionCookie) {
         key = key.replace(sessionPrefix, '');
 
-        if (utils.isJson(value)) {
+        if (utils.Type.isJson(value)) {
           value = JSON.parse(value);
         }
 
@@ -95,7 +97,7 @@ export default (req, res, next) => {
 
         cookieKey = `${cookiePrefix}${key}`;
         res.clearCookie(cookieKey, deleteOptions);
-      })
+      });
     } else {
       return;
     }

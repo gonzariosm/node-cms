@@ -15,4 +15,4 @@ function compress(content) {
 
 export default {
   compress: compress
-}
+};

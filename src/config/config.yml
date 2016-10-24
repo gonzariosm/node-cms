@@ -15,7 +15,7 @@ production: &default
     default: en
     list: [en, es]
   security:
-    secret: g0nz4l0r10s.cl
+    secret: sd.com
   session:
     cookieDomain: .gonzalorios.cl
     maxAge: 259200

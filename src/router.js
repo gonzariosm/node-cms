@@ -10,10 +10,8 @@ export default (app) => {
   const availableLanguages = $config().languages.list.join('|');
 
   app.use((req, res, next) => {
-    console.log(`router: ${req.url}`);
-    //console.log(req);
     res.__ = res.locals.__ = i18n.load(i18n.getCurrentLanguage(req.url));
-    res.locals.config.basePath = `${$config().baseUrl}${i18n.getLanguagePath(req.url)}`
+    res.locals.config.basePath = `${$config().baseUrl}${i18n.getLanguagePath(req.url)}`;
     res.locals.basePath = res.locals.config.basePath;
     res.locals.currentLanguage = i18n.getCurrentLanguage(req.url);
     res.locals.isMobile = utils.Device.isMobile(req.headers['user-agent']);
@@ -45,7 +43,7 @@ export default (app) => {
   });
 
   // development error handler
-  if (app.get('env') == 'development') {
+  if (app.get('env') === 'development') {
     app.use((err, req, res, next) => {
       res.status(err.status || 500);
       res.render('error', {

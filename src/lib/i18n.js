@@ -9,7 +9,6 @@ export default {
 };
 
 function getCurrentLanguage(url) {
-  console.log(`i18n: ${url}`);
   const params = utils.Url.getParamsFromUrl(url);
 
   return _.includes($config().languages.list, params[0])
